@@ -133,4 +133,62 @@
 1. Implement the screenshot below using ExtJS
 	* [screen1.png](img/screen1.png)
 	* [screen2.png](img/screen2.png)
+	
+1. server-side rendering vs client-side rendering
+1. implement function add(a, b, c...) 
+	```
+	add(3); // returns 3 
+	add(3, 4); // returns 7 
+	add(3, 4, 5); // returns 12
 
+	function add() {
+    	var i, a = 0;
+    	for (i in arguments) {
+        	a += arguments[i] ;
+    	}
+    	return a;
+	}
+	```
+1. impplement function max(a, b, c...) 
+	```
+	max(3); // returns 3 
+	max(3, 4); // returns 4 
+	max(3, 4, 5); // returns 5
+	function max() {
+    	var i, m = -Infinity;
+    	for (i in arguments) {
+        	if (arguments[i] > m) {
+            	m = arguments[i];
+        	}
+    	}
+    	return m;
+	}
+	```
+1. implement function clone
+	```
+	var x = function() {
+    	return 1;
+	};
+
+	var t = function(a,b,c) {
+    	return a+b+c;
+	};
+
+	Function.prototype.clone = function() {
+    	var that = this;
+    	var temp = function temporary() { return that.apply(this, arguments); };
+    	for(var key in this) {
+        	if (this.hasOwnProperty(key)) {
+            	temp[key] = this[key];
+        	}
+    	}
+    	return temp;
+	};
+
+	alert(x === x.clone());					//false
+	alert(x() === x.clone()());				//true
+
+	alert(t === t.clone());					//false
+	alert(t(1,1,1) === t.clone()(1,1,1));	//true
+	alert(t.clone()(1,1,1));				//3
+	```
