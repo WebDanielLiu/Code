@@ -194,3 +194,36 @@
 	alert(t(1,1,1) === t.clone()(1,1,1));	//true
 	alert(t.clone()(1,1,1));				//3
 	```
+1. AngularJS Multiple ng-app within a page
+```
+<div ng-app="myApp" ng-controller="myCtrl">
+{{ firstName + " " + lastName }}
+</div>
+<div id="myApp1" ng-app="myApp1" ng-controller="myCtrl1">
+{{ firstName1 + " " + lastName1 }}
+</div>
+<div id="myApp2" ng-app="myApp2" ng-controller="myCtrl2">
+{{ firstName2 + " " + lastName2 }}
+</div>
+
+<script>
+var app = angular.module("myApp", []);
+app.controller("myCtrl", function($scope) {
+    $scope.firstName = "John";
+    $scope.lastName = "Doe";
+});
+var app1 = angular.module("myApp1", []);
+app1.controller("myCtrl1", function($scope) {
+    $scope.firstName1 = "John";
+    $scope.lastName1 = "Doe";
+});
+angular.bootstrap(document.getElementById("myApp1"),['myApp1']);
+
+var app2 = angular.module("myApp2", []);
+app2.controller("myCtrl2", function($scope) {
+    $scope.firstName2 = "John";
+    $scope.lastName2 = "Doe";
+});
+angular.bootstrap(document.getElementById("myApp2"),['myApp2']);
+</script>
+```
