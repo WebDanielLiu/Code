@@ -195,6 +195,8 @@
 	alert(t.clone()(1,1,1));				//3
 	```
 1. AngularJS Multiple ng-app within a page
+
+Only one AngularJS application can be auto-bootstrapped per HTML document. The first ngApp found in the document will be used to define the root element to auto-bootstrap as an application. To run multiple applications in an HTML document you must manually bootstrap them using angular.bootstrap instead. AngularJS applications cannot be nested within each other
 ```
 <div ng-app="myApp" ng-controller="myCtrl">
 {{ firstName + " " + lastName }}
