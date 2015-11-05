@@ -229,3 +229,49 @@ app2.controller("myCtrl2", function($scope) {
 angular.bootstrap(document.getElementById("myApp2"),['myApp2']);
 </script>
 ```
+1. Closure in loop
+
+```
+function showHelp(help) {
+    document.getElementById('help').innerHTML = help;
+}
+
+function setupHelp() {
+    var helpText = [
+        {'id': 'email', 'help': 'Your e-mail address'},
+        {'id': 'name', 'help': 'Your full name'},
+        {'id': 'age', 'help': 'Your age (you must be over 16)'}
+    ];
+
+    for (var i = 0; i < helpText.length; i++) {
+        var item = helpText[i];
+        document.getElementById(item.id).onfocus = function() {
+            showHelp(item.help);
+        }
+    }
+}
+setupHelp();
+```
+Fix 1
+
+```
+    for (var i = 0; i < helpText.length; i++) {
+	var item = helpText[i];
+	document.getElementById(item.id).onfocus = function() {
+	    var help = item.help;
+            return function(){
+            	showHelp(help);
+            }
+        }();
+    }
+```
+
+Fix 2
+
+```
+function makeHelp(help){return function(){showHelp(help);};}
+
+    for (var i = 0; i < helpText.length; i++) {
+	document.getElementById(item.id).onfocus = makeHelp(helpText[i].help);
+    }
+```
