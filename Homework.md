@@ -196,66 +196,67 @@
 	```
 1. AngularJS Multiple ng-app within a page
 
-Only one AngularJS application can be auto-bootstrapped per HTML document. The first ngApp found in the document will be used to define the root element to auto-bootstrap as an application. To run multiple applications in an HTML document you must manually bootstrap them using angular.bootstrap instead. AngularJS applications cannot be nested within each other
-```
-<div ng-app="myApp" ng-controller="myCtrl">
-{{ firstName + " " + lastName }}
-</div>
-<div id="myApp1" ng-app="myApp1" ng-controller="myCtrl1">
-{{ firstName1 + " " + lastName1 }}
-</div>
-<div id="myApp2" ng-app="myApp2" ng-controller="myCtrl2">
-{{ firstName2 + " " + lastName2 }}
-</div>
+    Only one AngularJS application can be auto-bootstrapped per HTML document. The first ngApp found in the document will be used to define the root element to auto-bootstrap as an application. To run multiple applications in an HTML document you must manually bootstrap them using angular.bootstrap instead. AngularJS applications cannot be nested within each other
+    ```
+    <div ng-app="myApp" ng-controller="myCtrl">
+        {{ firstName + " " + lastName }}
+    </div>
+    <div id="myApp1" ng-app="myApp1" ng-controller="myCtrl1">
+        {{ firstName1 + " " + lastName1 }}
+    </div>
+    <div id="myApp2" ng-app="myApp2" ng-controller="myCtrl2">
+        {{ firstName2 + " " + lastName2 }}
+    </div>
 
-<script>
-var app = angular.module("myApp", []);
-app.controller("myCtrl", function($scope) {
-    $scope.firstName = "John";
-    $scope.lastName = "Doe";
-});
-var app1 = angular.module("myApp1", []);
-app1.controller("myCtrl1", function($scope) {
-    $scope.firstName1 = "John";
-    $scope.lastName1 = "Doe";
-});
-angular.bootstrap(document.getElementById("myApp1"),['myApp1']);
+    <script>
+        var app = angular.module("myApp", []);
+        app.controller("myCtrl", function($scope) {
+            $scope.firstName = "John";
+            $scope.lastName = "Doe";
+        });
+        
+        var app1 = angular.module("myApp1", []);
+        app1.controller("myCtrl1", function($scope) {
+            $scope.firstName1 = "John";
+            $scope.lastName1 = "Doe";
+        });
+        angular.bootstrap(document.getElementById("myApp1"),['myApp1']);
 
-var app2 = angular.module("myApp2", []);
-app2.controller("myCtrl2", function($scope) {
-    $scope.firstName2 = "John";
-    $scope.lastName2 = "Doe";
-});
-angular.bootstrap(document.getElementById("myApp2"),['myApp2']);
-</script>
-```
+        var app2 = angular.module("myApp2", []);
+        app2.controller("myCtrl2", function($scope) {
+            $scope.firstName2 = "John";
+            $scope.lastName2 = "Doe";
+        });
+        angular.bootstrap(document.getElementById("myApp2"),['myApp2']);
+    </script>
+    ```
 
 1. Closure in loop
 
-```
-function showHelp(help) {
-    document.getElementById('help').innerHTML = help;
-}
+    ```
+    function showHelp(help) {
+        document.getElementById('help').innerHTML = help;
+    }
 
-function setupHelp() {
-    var helpText = [
-        {'id': 'email', 'help': 'Your e-mail address'},
-        {'id': 'name', 'help': 'Your full name'},
-        {'id': 'age', 'help': 'Your age (you must be over 16)'}
-    ];
+    function setupHelp() {
+        var helpText = [
+            {'id': 'email', 'help': 'Your e-mail address'},
+            {'id': 'name', 'help': 'Your full name'},
+            {'id': 'age', 'help': 'Your age (you must be over 16)'}
+        ];
 
-    for (var i = 0; i < helpText.length; i++) {
-        var item = helpText[i];
-        document.getElementById(item.id).onfocus = function() {
-            showHelp(item.help);
+        for (var i = 0; i < helpText.length; i++) {
+            var item = helpText[i];
+            document.getElementById(item.id).onfocus = function() {
+                showHelp(item.help);
+            }
         }
     }
-}
-setupHelp();
-```
-Fix 1
+    setupHelp();
+    ```
+    Fix 1
 
-```
+    ```
     for (var i = 0; i < helpText.length; i++) {
 	var item = helpText[i];
 	document.getElementById(item.id).onfocus = function() {
@@ -265,25 +266,25 @@ Fix 1
             }
         }();
     }
-```
+    ```
 
-Fix 2
+    Fix 2
 
-```
-function makeHelp(help){return function(){showHelp(help);};}
-for (var i = 0; i < helpText.length; i++) {
-    document.getElementById(item.id).onfocus = makeHelp(helpText[i].help);
-}
-```
+    ```
+    function makeHelp(help){return function(){showHelp(help);};}
+    for (var i = 0; i < helpText.length; i++) {
+        document.getElementById(item.id).onfocus = makeHelp(helpText[i].help);
+    }
+    ```
 
-Fix 3
+    Fix 3
 
-```
-for (var i = 0; i < helpText.length; i++) {
-    document.getElementById(item.id).onfocus= (function(a) {
-        return function() {
-            showHelp(a);
-        }
-    })(helpText[i].help);
-}
-```
+    ```
+    for (var i = 0; i < helpText.length; i++) {
+        document.getElementById(item.id).onfocus= function(a) {
+            return function() {
+                showHelp(a);
+            }
+        }(helpText[i].help);
+    }
+    ```
