@@ -229,6 +229,7 @@ app2.controller("myCtrl2", function($scope) {
 angular.bootstrap(document.getElementById("myApp2"),['myApp2']);
 </script>
 ```
+
 1. Closure in loop
 
 ```
@@ -270,8 +271,19 @@ Fix 2
 
 ```
 function makeHelp(help){return function(){showHelp(help);};}
+for (var i = 0; i < helpText.length; i++) {
+    document.getElementById(item.id).onfocus = makeHelp(helpText[i].help);
+}
+```
 
-    for (var i = 0; i < helpText.length; i++) {
-	document.getElementById(item.id).onfocus = makeHelp(helpText[i].help);
-    }
+Fix 3
+
+```
+for (var i = 0; i < helpText.length; i++) {
+    document.getElementById(item.id).onfocus= (function(a) {
+        return function() {
+            showHelp(a);
+        }
+    })(helpText[i].help);
+}
 ```
