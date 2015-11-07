@@ -295,6 +295,7 @@
     function Object1(){
         this.firstName="fname";
         this.lastName="lname";
+        this.gender="gender";
         this.age="age";
         this.getLastName=function(){return this.lastName;};
     }
@@ -302,6 +303,9 @@
     Object1.prototype={
         getAge: function(){
             return this.age;
+        },
+        getGender: function(){
+            return this.gender;
         }
     };
 
