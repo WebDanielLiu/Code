@@ -385,5 +385,9 @@
     alert(s1.constructor===Person);
     alert(s2.constructor===Person);
     alert(s1.show===s2.show);           //true
-
+    
+    Person.prototype.gender="male";
+    alert(Person.prototype.isPrototypeOf(s1));  //true
+    alert(s1.hasOwnProperty("name"));           //true
+    alert(s1.hasOwnProperty("gender"));         //true
     ```
