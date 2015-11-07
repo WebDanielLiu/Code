@@ -319,3 +319,71 @@
     console.log(obj.getAge());
     
     ```
+1. Create an object
+
+    ```
+    var s={};
+    s.name="d1";
+    s.age=31;
+    s.show=function(){
+	    alert(s.name+":"+s["age"]);
+    };
+    s.show();
+
+    var s={
+        name:"d2",
+        age:32,
+        show:function(){
+            alert(s.name+":"+s["age"]);
+        }
+    };
+    s.show();
+
+    var s= new Object();
+    s.name="d3";
+    s.age=33;
+    s.show=function(){
+        alert(s.name+":"+s["age"]);
+    };
+    s.show();
+    
+    function Person(name,age){
+        this.name=name;
+        this.age=age;
+        this.show=function(){
+            alert(this.name+":"+this["age"]);
+        };
+    };
+    var s = new Person("d4",34);
+    s.show();
+    ```
+1. Function in object
+
+    ```
+    function Person(name,age){
+        this.name=name;
+        this.age=age;
+        this.show=function(){
+            alert(this.name+":"+this["age"]);
+        };
+    };
+    var s1 = new Person("d4",34);
+    var s2 = new Person("d4",34);
+    alert(s1.constructor===Person);     //true
+    alert(s2.constructor===Person);     //true
+    alert(s1.show===s2.show);           //false
+
+    function Person(name,age){
+        this.name=name;
+        this.age=age;
+    };
+    Person.prototype.show=function(){
+        alert(this.name+":"+this["age"]);
+    };
+    var s1 = new Person("d5",35);
+    var s2 = new Person("d6",36);
+    alert(s1.constructor===Person);
+    alert(s2.constructor===Person);
+    alert(s1.show===s2.show);           //true
+
+    ```
