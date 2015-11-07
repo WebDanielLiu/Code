@@ -288,3 +288,30 @@
         }(helpText[i].help);
     }
     ```
+    
+1. ProtoType
+
+    ```
+    function Object1(){
+        this.firstName="fname";
+        this.lastName="lname";
+        this.age="age";
+        this.getLastName=function(){return this.lastName;};
+    }
+
+    Object1.prototype={
+        getAge: function(){
+            return this.age;
+        }
+    };
+
+    Object1.prototype.getFirstName=function(){
+        return this.firstName;
+    };
+
+    var obj = Object1.create();
+    console.log(obj.getFirstName());
+    console.log(obj.getLastName());
+    console.log(obj.getAge());
+    
+    ```
