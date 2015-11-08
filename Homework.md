@@ -358,7 +358,7 @@
     s.show();
     ```
 1. Function in object
-
+    Two objects created by same class, their member functions will be different objects.
     ```
     function Person(name,age){
         this.name=name;
@@ -369,25 +369,74 @@
     };
     var s1 = new Person("d4",34);
     var s2 = new Person("d4",34);
-    alert(s1.constructor===Person);     //true
-    alert(s2.constructor===Person);     //true
-    alert(s1.show===s2.show);           //false
-
+    console.log(s1.constructor===Person);     //true
+    console.log(s2.constructor===Person);     //true
+    console.log(s1.show===s2.show);           //false
+    ```
+    If let them to share member function object, should make member function by using prototype. 
+    ```
     function Person(name,age){
         this.name=name;
         this.age=age;
     };
     Person.prototype.show=function(){
-        alert(this.name+":"+this["age"]);
+        console.log(this.name+":"+this["age"]);
     };
     var s1 = new Person("d5",35);
     var s2 = new Person("d6",36);
-    alert(s1.constructor===Person);
-    alert(s2.constructor===Person);
-    alert(s1.show===s2.show);           //true
+    console.log(s1.constructor===Person);
+    console.log(s2.constructor===Person);
+    console.log(s1.show===s2.show);           //true
     
     Person.prototype.gender="male";
-    alert(Person.prototype.isPrototypeOf(s1));  //true
-    alert(s1.hasOwnProperty("name"));           //true
-    alert(s1.hasOwnProperty("gender"));         //true
+    console.log(Person.prototype.isPrototypeOf(s1));  //true
+    console.log(s1.hasOwnProperty("name"));           //true
+    console.log(s1.hasOwnProperty("gender"));         //true
+    ```
+    
+1. Inheritance by call or apply
+    ```
+    function Animal(){
+        this.s = "Animal";
+        this.getName=function(){return this.getA() + this.getB();};
+        this.getA=function(){};    //Likes a abstrct method;
+    }
+    function Cat(){
+        Animal.call(this);
+        this.name="Cat";
+        this.getA=function(){return this.name;};    //Override
+        this.getB=function(){return this.name.toUpperCase();};
+    }
+    function OtherCat(){
+        Cat.call(this);
+        //Unfortunately, the overloading likes in Java/C++/C# is not supported in js
+        this.getC=function(c){return c+c;};   
+        this.getC=function(c,d){return c+d;};
+    }
+    var cat = new Cat();
+    console.log(cat.s);           //Animal
+    console.log(cat.getName());   //CatCAT
+
+    var caty = new OtherCat();
+    console.log(caty.s);          //Animal
+    console.log(caty.getName());  //CatCAT
+    console.log(caty.getC("abc"));        //abcundefined, actually called getC("abc",undefined);
+    console.log(caty.getC("abc","efg"));  //abcefg
+    ```
+1. Inheritance by prototype
+    ```
+    function Animal(){};
+    Animal.prototype.s = "Animal";
+    Animal.prototype.getName=function(){return this.getA() + this.getB();};
+    Animal.prototype.getA=function(){return this.s;}; 
+    function Dog(){
+        this.name="dog";
+        this.getA=function(){return this.name + "A";};    //Override
+        this.getB=function(){return this.name + "B";};    //Delay declare
+    };
+    Dog.prototype=Animal.prototype;
+    var dog = new Dog();
+    console.log(dog.s);           //Animal
+    console.log(dog.getName());   //dogAdogB  
+    
     ```
