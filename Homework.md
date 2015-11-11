@@ -559,7 +559,7 @@
     console.log(dog.getName());
     ```
     
-    All of these problems cause the mechanis of prototype and __proto__.
+    All of these problems cause the mechanis of prototype and \_\_proto\_\_.
     
     About constructor:
     The constructor property makes absolutely no practical difference to anything internally. It's only any use if your code explicitly uses it. For example, you may decide you need each of your objects to have a reference to the actual constructor function that created it; if so, you'll need to set the constructor property explicitly when you set up inheritance by assigning an object to a constructor function's prototype property, as in the example.
