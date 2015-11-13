@@ -313,7 +313,7 @@
         return this.firstName;
     };
 
-    var obj = Object1.create();
+    var obj = new Object1();
     console.log(obj.getFirstName());
     console.log(obj.getLastName());
     console.log(obj.getAge());
@@ -441,7 +441,7 @@
     
     ```
 1. Actually, above two ways are incorrect inheritance.         
-    The first one, child object cannot inherit the functions of parent object which are defined in prototype. 
+    The previous one, child object cannot inherit the functions which are defined in prototype of parent. 
     See below code:
 
     ```
@@ -457,7 +457,8 @@
     console.log(cat.getName());   //error "TypeError: cat.getName is not a function"
     
     ```
-    The second one, child object cannot access the properties of parent object which are defined in the parent function body. See below code:
+    The second one, child object cannot access the properties which are defined in the body of parent. 
+    See below code:
     
     ```
     function Animal(){
@@ -500,7 +501,7 @@
     
     ```
     
-    Seems everything is OK? No, there is a fatal problem. When you add a function to child by using prototype, at the same time, this function also will be added in to parent. Because their prototypes are one and the same. Meanwhile, the child object might not call this function correctly. See the below code:
+    Seems everything is OK? No, there is a fatal problem in above. When you add a function to child by using prototype, at the same time, this function also will be added in to parent. Because their prototypes are one and the same. See the below code:
     
     ```
     
@@ -559,7 +560,7 @@
     console.log(dog.getName());
     ```
     
-    All of these problems cause the mechanis of prototype and \_\_proto\_\_.
+    All of these problems cause the mechanis of prototype and \_\_proto\_\_. Basiclly, under the relationship of parent and child, should be guaranteed that child.prototype.\_\_proto\_\_===parent.prototype. 
     
     About constructor:
     The constructor property makes absolutely no practical difference to anything internally. It's only any use if your code explicitly uses it. For example, you may decide you need each of your objects to have a reference to the actual constructor function that created it; if so, you'll need to set the constructor property explicitly when you set up inheritance by assigning an object to a constructor function's prototype property, as in the example.
