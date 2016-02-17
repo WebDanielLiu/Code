@@ -38,6 +38,7 @@
 	* Answer:
 	```
 	(function(a){var b=a.replace(/[.\s]/g,'').toUpperCase().split('');return b.join('')==b.reverse().join('');})("A nut for a jar of tuna.");
+	(a=>(b=>{return b==[...b].reverse().join('')})(a.replace(/[.\s]/g,'').toUpperCase()))("A nut for a jar of tuna.")
 	```
 	
 	
